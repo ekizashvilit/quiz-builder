@@ -11,17 +11,19 @@ model Quiz {
   id        String     @id @default(uuid())
   title     String
   createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   questions Question[]
 }
 
 model Question {
-  id            String  @id @default(uuid())
+  id            String   @id @default(uuid())
   quizId        String
   type          String // 'boolean', 'input', 'checkbox'
   questionText  String
   options       String? // JSON string for checkbox options
-  correctAnswer String? // For storing correct answers
-  quiz          Quiz    @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  correctAnswer String? // JSON string for storing correct answers
+  createdAt     DateTime @default(now())
+  quiz          Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
 
   @@index([quizId])
 }

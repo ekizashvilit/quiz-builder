@@ -10,7 +10,11 @@
 		"prisma:generate": "prisma generate",
 		"prisma:migrate": "prisma migrate dev",
 		"prisma:studio": "prisma studio",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"seed": "ts-node src/seed.ts",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"lint": "eslint . --ext .ts",
+		"lint:fix": "eslint . --ext .ts --fix",
+		"format": "prettier --write \"src/**/*.ts\""
 	},
 	"keywords": [],
 	"author": "",
@@ -27,7 +31,12 @@
 		"@types/dotenv": "^6.1.1",
 		"@types/express": "^5.0.3",
 		"@types/node": "^24.6.0",
+		"@typescript-eslint/eslint-plugin": "^8.45.0",
+		"@typescript-eslint/parser": "^8.45.0",
+		"eslint": "^9.36.0",
+		"eslint-config-prettier": "^10.1.8",
 		"nodemon": "^3.1.10",
+		"prettier": "^3.6.2",
 		"prisma": "^6.16.2",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.9.2"

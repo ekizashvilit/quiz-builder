@@ -1,29 +1,37 @@
-import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import express, { Express } from "express";
+
 import prisma from "./prisma";
+import quizRoutes from "./routes/quizRoutes";
+import notFoundMiddleware from "./middleware/not-found";
+import errorHandlerMiddleware from "./middleware/error-handler";
 
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT || 3001;
 
+// middleware
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req: Request, res: Response) => {
-	res.json({ message: "test message" });
-});
+// routes
+app.use("/quizzes", quizRoutes);
 
-app.get("/db", async (req: Request, res: Response) => {
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
+
+const port = process.env.PORT || 3001;
+
+const start = async () => {
 	try {
 		await prisma.$connect();
-		res.json({ status: "ok", database: "connected" });
+		app.listen(port, () => {
+			console.log(`Server is listening on port ${port}...`);
+		});
 	} catch (error) {
-		res.status(500).json({ status: "error", database: "disconnected" });
+		console.log(error);
 	}
-});
+};
 
-app.listen(port, () => {
-	console.log(`test message`);
-});
+start();

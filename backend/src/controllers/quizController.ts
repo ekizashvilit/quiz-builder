@@ -16,12 +16,12 @@ const createQuiz = asyncHandler(async (req: Request, res: Response) => {
     data: {
       title,
       questions: {
-        create: questions.map((q: any) => ({
-          type: q.type,
-          questionText: q.questionText,
-          options: q.options ? JSON.stringify(q.options) : null,
-          correctAnswer: q.correctAnswer
-            ? JSON.stringify(q.correctAnswer)
+        create: questions.map((question: any) => ({
+          type: question.type,
+          questionText: question.questionText,
+          options: question.options ? JSON.stringify(question.options) : null,
+          correctAnswer: question.correctAnswer
+            ? JSON.stringify(question.correctAnswer)
             : null,
         })),
       },
@@ -33,10 +33,12 @@ const createQuiz = asyncHandler(async (req: Request, res: Response) => {
 
   const formattedQuiz = {
     ...quiz,
-    questions: quiz.questions.map(q => ({
-      ...q,
-      options: q.options ? JSON.parse(q.options) : null,
-      correctAnswer: q.correctAnswer ? JSON.parse(q.correctAnswer) : null,
+    questions: quiz.questions.map(question => ({
+      ...question,
+      options: question.options ? JSON.parse(question.options) : null,
+      correctAnswer: question.correctAnswer
+        ? JSON.parse(question.correctAnswer)
+        : null,
     })),
   };
 
@@ -55,11 +57,11 @@ const getAllQuizzes = asyncHandler(async (req: Request, res: Response) => {
     },
   });
 
-  const formattedQuizzes = quizzes.map(quiz => ({
-    id: quiz.id,
-    title: quiz.title,
-    createdAt: quiz.createdAt,
-    questionCount: quiz._count.questions,
+  const formattedQuizzes = quizzes.map(quizItem => ({
+    id: quizItem.id,
+    title: quizItem.title,
+    createdAt: quizItem.createdAt,
+    questionCount: quizItem._count.questions,
   }));
 
   res.status(200).json(formattedQuizzes);
@@ -81,10 +83,12 @@ const getSingleQuiz = asyncHandler(async (req: Request, res: Response) => {
 
   const formattedQuiz = {
     ...quiz,
-    questions: quiz.questions.map(q => ({
-      ...q,
-      options: q.options ? JSON.parse(q.options) : null,
-      correctAnswer: q.correctAnswer ? JSON.parse(q.correctAnswer) : null,
+    questions: quiz.questions.map(question => ({
+      ...question,
+      options: question.options ? JSON.parse(question.options) : null,
+      correctAnswer: question.correctAnswer
+        ? JSON.parse(question.correctAnswer)
+        : null,
     })),
   };
 

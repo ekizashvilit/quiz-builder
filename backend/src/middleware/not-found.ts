@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
 const notFoundMiddleware = (req: Request, res: Response) => {
-	res.status(404).json({ msg: "Route does not exist" });
+  res.status(404).json({ msg: 'Route does not exist' });
 };
 
 export default notFoundMiddleware;
